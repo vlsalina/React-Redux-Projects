@@ -99,39 +99,59 @@ class App extends React.Component {
   render() {
     return (
      <div className="App">
-      <h1>{this.show()}</h1>
-      <button onClick={() => this.handleClick('1')}>1</button>
-      <button onClick={() => this.handleClick('2')}>2</button>
-      <button onClick={() => this.handleClick('3')}>3</button>
-      <button onClick={() => this.handleClick('4')}>4</button>
-      <button onClick={() => this.handleClick('5')}>5</button>
-      <button onClick={() => this.handleClick('6')}>6</button>
-      <button onClick={() => this.handleClick('7')}>7</button>
-      <button onClick={() => this.handleClick('8')}>8</button>
-      <button onClick={() => this.handleClick('9')}>9</button>
-      <button onClick={() => this.handleClick('0')}>0</button> <br/>
+      <div className="display">
+        {this.show()}
+      </div>
+      
+      <div className="top">
+      <div className="col">
+        <div className="row">
+          <button onClick={() => this.handleClick('1')}>1</button>
+          <button onClick={() => this.handleClick('2')}>2</button>
+          <button onClick={() => this.handleClick('3')}>3</button>
+        </div>
 
-      <button onClick={() => this.temp(ADD)}>+</button> 
-      <button onClick={() => this.temp(SUBTRACT)}>-</button> 
-      <button onClick={() => this.temp(MULTIPLY)}>*</button> 
-      <button onClick={() => this.temp(DIVIDE)}>/</button> 
-            
-      <button onClick={() => this.handleSubmit()}>=</button>
+        <div className="row">
+          <button onClick={() => this.handleClick('4')}>4</button>
+          <button onClick={() => this.handleClick('5')}>5</button>
+          <button onClick={() => this.handleClick('6')}>6</button>
+        </div>
+
+        <div className="row">
+          <button onClick={() => this.handleClick('7')}>7</button>
+          <button onClick={() => this.handleClick('8')}>8</button>
+          <button onClick={() => this.handleClick('9')}>9</button>
+        </div>
+
+        <div className="row">
+          <button onClick={() => this.handleClick('0')}>0</button> <br/>
+        </div>
+      </div>
+
+      <div className="col">
+        <button onClick={() => this.temp(ADD)}>+</button> 
+        <button onClick={() => this.temp(SUBTRACT)}>-</button> 
+        <button onClick={() => this.temp(MULTIPLY)}>*</button> 
+        <button onClick={() => this.temp(DIVIDE)}>/</button> 
+              
+        <button onClick={() => this.handleSubmit()}>=</button>
+      </div>
+      </div>
 
      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-};
+//const mapStateToProps = (state) => {
+//};
 
-const mapDispatchToProps = (dispatch) => {
-
-  return { 
-    }
-   
-}; 
+//const mapDispatchToProps = (dispatch) => {
+//
+//  return { 
+//    }
+//   
+//}; 
 
 //const Container = connect(mapStateToProps, mapDispatchToProps)(App);
 
