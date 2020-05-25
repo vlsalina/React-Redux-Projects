@@ -10,38 +10,40 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      num1: '',
-      num2: '',
+      num1: '0',
+      num2: '0',
       result: 0,
       operation: '',
-      opPressed: false
+      opPressed: false,
+      showFlag: 0
     }
     this.handleClick = this.handleClick.bind(this);
-    this.handleOperation = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.temp = this.temp.bind(this);
+    this.show = this.show.bind(this);
   }
 
   handleClick(arg) { 
+      if (this.state.showFlag == 2) {
+        this.setState({
+          showFlag: 0
+        })
+      }
+
       if (this.state.opPressed === false) {
           this.setState({ 
-            num1: this.state.num1.concat(arg)
+            num1: this.state.num1.replace("0", "").concat(arg)
           })
       } else {
           this.setState({
-            num2: this.state.num2.concat(arg)
+            num2: this.state.num2.replace("0", "").concat(arg)
           })
       }  
-  }
 
-  handleOperation(op) {
-    this.setState({
-      operation: op,
-      opPressed: !this.state.opPressed
-    })
   }
 
   handleSubmit() {
+
     let res = 0;
     switch(this.state.operation) {
       case ADD:
@@ -61,25 +63,43 @@ class App extends React.Component {
 
     this.setState({
       result: res, 
-      num1: '',
-      num2: '',
+      num1: '0',
+      num2: '0',
       operation: '',
-      opPressed: false
+      opPressed: false,
+      showFlag: this.state.showFlag + 1 
     })
   }
 
   temp(op) {
     this.setState({
       operation: op, 
-      opPressed: !this.state.opPressed
+      opPressed: !this.state.opPressed,
+      showFlag: this.state.showFlag + 1
     })
+  }
+
+  show() {
+    let toShow = 0;
+    if (this.state.showFlag == 0) {
+      toShow = this.state.num1; 
+    } else if (this.state.showFlag == 1) {
+      toShow = this.state.num2;
+    } else if (this.state.showFlag == 2) {
+      toShow = this.state.result;
+    } else {
+      toShow = '0';
+    } 
+
+    return <h1>{toShow}</h1>;
+     
   }
 
   // render
   render() {
     return (
      <div className="App">
-      <h1>{this.state.result}</h1>
+      <h1>{this.show()}</h1>
       <button onClick={() => this.handleClick('1')}>1</button>
       <button onClick={() => this.handleClick('2')}>2</button>
       <button onClick={() => this.handleClick('3')}>3</button>
