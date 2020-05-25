@@ -4,72 +4,116 @@ import './App.css';
 import { connect } from 'react-redux';
 import { ADD, SUBTRACT, MULTIPLY, DIVIDE } from './actionTypes';
 
-function actionResult(op,it1,it2) {
-  return { type: op, item1: it1, item2: it2 }
-};
-
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item1: 0,
-      item2: 0,
-      op: '',
-      result: 0
+      num1: '',
+      num2: '',
+      result: 0,
+      operation: '',
+      opPressed: false
     }
-    this.handleChange1 = this.handleChange1.bind(this);
-    this.handleChange2 = this.handleChange2.bind(this);
-    this.handleOperation = this.handleOperation.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleOperation = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.temp = this.temp.bind(this);
   }
 
-  handleChange1(event) {
-    this.setState({
-      item1: event.target.value
-    })
-  } 
+  handleClick(arg) { 
+      if (this.state.opPressed === false) {
+          this.setState({ 
+            num1: this.state.num1.concat(arg)
+          })
+      } else {
+          this.setState({
+            num2: this.state.num2.concat(arg)
+          })
+      }  
+  }
 
-  handleChange2(event) {
+  handleOperation(op) {
     this.setState({
-      item2: event.target.value
+      operation: op,
+      opPressed: !this.state.opPressed
     })
   }
 
-  handleOperation(event) {
+  handleSubmit() {
+    let res = 0;
+    switch(this.state.operation) {
+      case ADD:
+        res =  (parseInt(this.state.num1) + parseInt(this.state.num2));  
+        break;
+      case SUBTRACT:
+        res =  (parseInt(this.state.num1) - parseInt(this.state.num2));
+        break;
+      case MULTIPLY:
+        res =  (parseInt(this.state.num1) * parseInt(this.state.num2)); 
+        break;
+      case DIVIDE:
+        res =  (parseInt(this.state.num1) / parseInt(this.state.num2));
+        break;
+      default:
+    }
+
     this.setState({
-      op: event.target.value
+      result: res, 
+      num1: '',
+      num2: '',
+      operation: '',
+      opPressed: false
     })
-  }  
-  
+  }
+
+  temp(op) {
+    this.setState({
+      operation: op, 
+      opPressed: !this.state.opPressed
+    })
+  }
+
   // render
   render() {
     return (
      <div className="App">
-        <input type="number" value={this.state.item1} onChange={this.handleChange1} />
-        <input type="number" value={this.state.item2} onChange={this.handleChange2} />
-        <input type="text" value={this.state.op} onChange={this.handleOperation} />
-        <button type="submit" onClick={this.props.appendResult(this.state.op, this.state.item1, this.state.item2)}>Submit</button>
-        <ul>
-          {this.props.results.map((res,idx) => <li key={idx}>{res.type} {res.answer}</li> )}
-        </ul>
+      <h1>{this.state.result}</h1>
+      <button onClick={() => this.handleClick('1')}>1</button>
+      <button onClick={() => this.handleClick('2')}>2</button>
+      <button onClick={() => this.handleClick('3')}>3</button>
+      <button onClick={() => this.handleClick('4')}>4</button>
+      <button onClick={() => this.handleClick('5')}>5</button>
+      <button onClick={() => this.handleClick('6')}>6</button>
+      <button onClick={() => this.handleClick('7')}>7</button>
+      <button onClick={() => this.handleClick('8')}>8</button>
+      <button onClick={() => this.handleClick('9')}>9</button>
+      <button onClick={() => this.handleClick('0')}>0</button> <br/>
+
+      <button onClick={() => this.temp(ADD)}>+</button> 
+      <button onClick={() => this.temp(SUBTRACT)}>-</button> 
+      <button onClick={() => this.temp(MULTIPLY)}>*</button> 
+      <button onClick={() => this.temp(DIVIDE)}>/</button> 
+            
+      <button onClick={() => this.handleSubmit()}>=</button>
+
      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-   return { results: state.results }
 };
 
 const mapDispatchToProps = (dispatch) => {
+
   return { 
-    appendResult: (op,it1,it2) => {
-      dispatch(actionResult(op,it1,it2))
     }
-  } 
+   
 }; 
 
-const Container = connect(mapStateToProps, mapDispatchToProps)(App);
+//const Container = connect(mapStateToProps, mapDispatchToProps)(App);
 
-export default Container;
+//export default Container;
+export default App;
